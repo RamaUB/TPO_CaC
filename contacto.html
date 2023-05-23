@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Pizza C&C</title>
+
+   <!-- Cdn Font Awesome   -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!--  Estilos CSS propios   -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+   
+<!-- Sección encabezado  -->
+
+<header class="header">
+
+   <section class="flex">
+
+      <a href="index.html" class="logo"> <img src="/images/logo.png" alt="Logo Pizza C&C."></a>
+
+      <nav class="navbar">
+         <a href="index.html">Inicio</a>
+         <a href="nosotros.html">Nosotros</a>
+         <a href="index.html#testimonios">Testimonios</a>
+         <a href="menu.html">Menú</a>
+         <a href="contacto.html">Contacto</a>
+         <a href="index.html#faq">FAQ</a>
+      </nav>
+
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="order-btn" class="fas fa-box"></div>
+         <div id="cart-btn" class="fas fa-shopping-cart"><span>(4)</span></div>
+      </div>
+
+   </section>
+
+</header>
+
+<!-- Fin sección encabezado -->
+
+
+<section class="contacto" id="contacto">
+
+    <h1 class="heading anim-titulo">Contactános</h1>
+ 
+    <form id="form-contacto">
+ 
+       <div class="flex">
+          <div class="inputBox">
+             <label>Nombre:</label>
+             <input type="text" name="name" class="box" required placeholder="Ingresá tu nombre" maxlength="20" id="nombre-contacto" onkeyup="validarNombre()"> <span id="error-nombre"></span>
+          </div>
+          <div class="inputBox">
+             <label>Teléfono:</label>
+             <input type="number" name="number" class="box" required placeholder="Ingresá tu teléfono" min="0" id="telefono-contacto" onkeyup="validarTelefono()"> <span id="error-tel"></span>
+          </div>
+          <div class="inputBox">
+            <label>E-mail:</label>
+            <input type="email" name="email" class="box" required placeholder="Ingresá tu correo electrónico" min="0" id="email-contacto" onkeyup="validarEmail()"> <span id="error-email"></span>
+         </div>
+         <div class="inputBox">
+            <label>Asunto:</label>
+            <input type="text" name="asunto" class="box" required placeholder="Ingresá el asunto" maxlength="20" id="asunto-contacto" onkeyup="validarAsunto()"> <span id="error-asunto"></span>
+         </div>
+         <div class="inputText">
+            <label>Mensaje:</label>
+            <textarea cols="100" rows="10" class="box" required id="mensaje-contacto" onkeyup="validarMensaje()"></textarea> <span id="error-mensaje"></span>
+         </div>
+       </div>
+ 
+       <input type="submit" value="Enviar" class="btn" name="enviar" id="enviar">
+       <span id="error-envio"></span>
+ 
+    </form>
+ 
+ </section>
+ 
+
+<!-- Carrito -->
+<div class="shopping-cart">
+
+   <section>
+
+      <div id="close-cart"><span>Cerrar</span></div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-1.jpg" alt="">
+         <div class="content">
+            <p>pizza-1 <span>( $1.200/- x 2 )</span></p>
+            <form action="" method="post">
+               <input type="number" class="cant" name="qty" min="1" value="2" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-3.jpg" alt="">
+         <div class="content">
+            <p>pizza-3 <span>( $1.200/- x 1 )</span></p>
+            <form action="" method="post">
+               <input type="number" class="cant" name="qty" min="1" value="1" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-6.jpg" alt="">
+         <div class="content">
+            <p>pizza-6 <span>( $1.200/- x 2 )</span></p>
+            <form action="" method="post">
+               <input type="number" class="cant" name="qty" min="1" value="2" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-7.jpg" alt="">
+         <div class="content">
+            <p>pizza-7 <span>( $1.200/- x 1 )</span></p>
+            <form action="" method="post">
+               <input type="number" class="cant" name="qty" min="1" value="1" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <a href="#order" class="btn">Pedir ahora</a>
+
+   </section>
+
+</div>
+<!-- Fin Carrito -->
+
+
+<section class="footer">
+
+    <div class="box-container">
+ 
+       <div class="box">
+          <i class="fas fa-phone"></i>
+          <h3>Teléfonos</h3>
+          <p>+123-456-7890</p>
+          <p>+111-222-3333</p>
+       </div>
+ 
+       <div class="box">
+          <i class="fas fa-map-marker-alt"></i>
+          <h3>Dirección</h3>
+          <p>Calle Falsa 123</p>
+          <p>Argentina</p>
+       </div>
+ 
+       <div class="box">
+          <i class="fas fa-clock"></i>
+          <h3>Horarios</h3>
+          <p>Lunes a Domingo</p>
+          <p>07:00am a 00:10pm</p>
+       </div>
+ 
+       <div class="box">
+          <i class="fas fa-envelope"></i>
+          <h3>Correo Electrónico</h3>
+          <p>pedidos@pizzascyc.com</p>
+          <p>reclamos@pizzascyc.com</p>
+       </div>
+       
+       <div class="box">
+          <div id="clima"></div>
+       </div>
+    </div>
+ 
+    <div class="credit">
+       &copy; copyright @ 2023 por <span>Grupo11 - Comisión 23007</span> | Todos los derechos reservados.
+    </div>
+ 
+ </section>
+ 
+ <!-- fin footer -->
+ 
+
+
+<!-- links archivos javascript  -->
+<script src="js/validar.js"></script>
+<script src="js/script.js"></script>
+<script src="js/clima.js"></script>
+
+</body>
+</html> 
