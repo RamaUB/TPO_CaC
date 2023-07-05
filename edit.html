@@ -40,8 +40,8 @@
             </table>
         </div>
 
-        <h2>Agregar Nueva Pizza</h2>
-        <form @submit="agregarPizza">
+        <h2 v-if="!pizzaSeleccionada">Agregar Nueva Pizza</h2>
+        <form v-if="!pizzaSeleccionada" @submit="agregarPizza">
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input type="text" class="form-control" v-model="nuevaPizza.nombre" required>
