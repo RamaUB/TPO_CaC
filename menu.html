@@ -14,7 +14,7 @@
 
 </head>
 <body>
-   
+<div id="app"> 
 <!-- Sección encabezado  -->
 
 <header class="header">
@@ -48,22 +48,22 @@
 
 <!-- Inicio menú  -->
 
-<section id="menu" class="menu">
+<section id="menu" class="menu" >
 
     <h1 class="heading anim-titulo">Nuestro Menú</h1>
  
-    <div class="box-container" id="app">
+    <div class="box-container">
  
        <div class="box" v-for="pizza in pizzas" :key="pizza.id">
-          <div class="precio">$<span>{{ pizza.precio }}</span>/-</div>
-          <img :src="'images/' + pizza.imagen" alt="">
-          <div class="nombre">{{ pizza.nombre }}</div>
-          <form>
-             <input type="number" min="1" max="100" value="1" class="cant" name="qty">
-             <input type="submit" value="add to cart" name="add_to_cart" class="btn">
-          </form>
-       </div>
- 
+         <div class="precio">$<span>{{ pizza.precio }}</span>/-</div>
+         <img :src="'images/' + pizza.imagen" alt="">
+         <div class="nombre">{{ pizza.nombre }}</div>
+         <form>
+            <input type="number" min="1" max="100" v-model="pizza.cantidad" class="cant" name="qty">
+            <button type="button" @click="agregarAlCarrito(pizza)" class="btn">add to cart</button>
+         </form>
+      </div>
+
     </div>
  
  </section>
@@ -77,55 +77,24 @@
 
       <div id="close-cart"><span>Cerrar</span></div>
 
-      <div class="box">
-         <a href="#" class="fas fa-times"></a>
-         <img src="images/pizza-1.jpg" alt="">
+      <div class="box" v-for="carr in carrito" :key="carr.id">
+         <a href="#" class="fas fa-times" @click="eliminarDelCarrito(carr.id)"></a>
+         <img :src="'images/' + carr.imagen" alt="">
          <div class="content">
-            <p>pizza-1 <span>( $1.200/- x 2 )</span></p>
+            <p>{{ carr.nombre }}<span>( ${{ carr.precio }}/- x {{ carr.cantidad }} )</span></p>
             <form>
-               <input type="number" class="cant" name="qty" min="1" value="2" max="100">
-               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+               <input type="number" class="cant" name="qty" min="1" v-model="carr.cantidad" max="100">
+               <button type="button" @click="actualizarCantidad(carr)" class="fas fa-edit" name="update_qty"></button>
             </form>
          </div>
       </div>
 
-      <div class="box">
-         <a href="#" class="fas fa-times"></a>
-         <img src="images/pizza-3.jpg" alt="">
-         <div class="content">
-            <p>pizza-3 <span>( $1.200/- x 1 )</span></p>
-            <form>
-               <input type="number" class="cant" name="qty" min="1" value="1" max="100">
-               <button type="submit" class="fas fa-edit" name="update_qty"></button>
-            </form>
-         </div>
-      </div>
+      <div class="total-price">
+        <h2>Total:</h2>
+        <p>${{ calcularPrecioTotal() }}/-</p>
+     </div>
 
-      <div class="box">
-         <a href="#" class="fas fa-times"></a>
-         <img src="images/pizza-6.jpg" alt="">
-         <div class="content">
-            <p>pizza-6 <span>( $1.200/- x 2 )</span></p>
-            <form>
-               <input type="number" class="cant" name="qty" min="1" value="2" max="100">
-               <button type="submit" class="fas fa-edit" name="update_qty"></button>
-            </form>
-         </div>
-      </div>
-
-      <div class="box">
-         <a href="#" class="fas fa-times"></a>
-         <img src="images/pizza-7.jpg" alt="">
-         <div class="content">
-            <p>pizza-7 <span>( $1.200/- x 1 )</span></p>
-            <form>
-               <input type="number" class="cant" name="qty" min="1" value="1" max="100">
-               <button type="submit" class="fas fa-edit" name="update_qty"></button>
-            </form>
-         </div>
-      </div>
-
-      <a href="#order" class="btn">Pedir ahora</a>
+      <a  @click="realizarPedido" class="btn">Pedir ahora</a>
 
    </section>
 
@@ -176,63 +145,118 @@
    </div>
 
 </section>
- 
+</div>
  <!-- Fin footer -->
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  
  <!-- Links scripts  -->
  <script src="js/script.js"></script>
  <script src="js/clima.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        URL = 'https://ciafa.pythonanywhere.com';
-
-        new Vue({
-            el: '#app',
-            data: {
-                pizzas: [],
-                nuevaPizza: {
-                    nombre: '',
-                    precio: '',
-                    detalles: '',
-                    imagen: ''
-                },
-                pizzaSeleccionada: null
+      URL = 'http://localhost:5000';
+  
+      new Vue({
+          el: '#app',
+          data: {
+              pizzas: [],
+              carrito: [],
+              nuevaPizza: {
+                  nombre: '',
+                  precio: '',
+                  detalles: '',
+                  imagen: ''
+              },
+              pizzaSeleccionada: null
+          },
+          created() {
+              this.obtenerPizzas();
+              this.obtenerCarrito();
+          },
+          methods: {
+              obtenerPizzas() {
+                  axios.get(URL+'/api/pizzas')
+                      .then(response => {
+                          this.pizzas = response.data;
+                      })
+                      .catch(error => {
+                          console.error(error);
+                      });
+              },
+              obtenerCarrito() {
+                  axios.get(URL+'/api/carrito')
+                      .then(response2 => {
+                          this.carrito = response2.data;
+                      })
+                      .catch(error => {
+                          console.error(error);
+                      });
+              },
+              agregarAlCarrito(pizza) {
+                  const { nombre, precio, cantidad, imagen } = pizza;
+  
+                  axios.post(URL+'/api/carrito', {
+                      nombre: nombre,
+                      precio: precio,
+                      cantidad: cantidad,
+                      imagen: imagen
+                  })
+                  .then(response => {
+                      this.obtenerCarrito(); // Actualizar el carrito después de agregar un elemento
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+              },
+              actualizarCantidad(pizza) {
+                  const { id, nombre, precio, cantidad, imagen } = pizza;
+  
+                  axios.put(`${URL}/api/carrito/${id}`, {
+                      nombre: nombre,
+                      precio: precio,
+                      cantidad: cantidad,
+                      imagen: imagen
+                  })
+                  .then(response => {
+                      this.obtenerCarrito(); // Actualizar el carrito después de actualizar la cantidad
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+              },
+              eliminarDelCarrito(id) {
+                axios.delete(`${URL}/api/carrito/${id}`)
+                    .then(response => {
+                        this.obtenerCarrito(); // Actualizar el carrito después de eliminar un elemento
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             },
-            created() {
-                this.obtenerPizzas();
-            },
-            methods: {
-                obtenerPizzas() {
-                    axios.get(URL+'/api/pizzas')
-                        .then(response => {
-                            this.pizzas = response.data;
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
+            calcularPrecioTotal() {
+                let total = 0;
+                for (let i = 0; i < this.carrito.length; i++) {
+                    const item = this.carrito[i];
+                    total += item.precio * item.cantidad;
                 }
+                return total;
+            },
+            realizarPedido() {
+                const pedido =  this.carrito;
+
+                axios.post(`${URL}/api/pedidos`, pedido)
+                    .then(response => {
+                        // Manejar la respuesta de la API después de realizar el pedido
+                        console.log(response.data);
+                        // Restablecer el carrito después de realizar el pedido
+                        this.carrito = [];
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             }
-        });
-    </script>
- 
+          }
+      });
+  </script>
  </body>
  </html>
