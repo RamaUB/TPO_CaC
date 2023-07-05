@@ -27,7 +27,7 @@
             <td>{{ pedido.nombre }}</td>
             <td>${{ pedido.precio }}</td>
             <td>{{ pedido.cantidad }}</td>
-            <td><img :src="'/images/'+pedido.imagen" alt="Pizza" style="width: 100px;"></td>
+            <td><img :src="'images/'+pedido.imagen" alt="Pizza" style="width: 100px;"></td>
             <td>
               <button @click="eliminarPedido(pedido.numero_pedido)" class="btn btn-danger">Pedido terminado</button>
             </td>
@@ -37,7 +37,7 @@
             <td>{{ pedido.nombre }}</td>
             <td>${{ pedido.precio }}</td>
             <td>{{ pedido.cantidad }}</td>
-            <td><img :src="'/images/'+pedido.imagen" alt="Pizza" style="width: 100px;"></td>
+            <td><img :src="'images/'+pedido.imagen" alt="Pizza" style="width: 100px;"></td>
             <td></td>
           </tr>
           <tr v-if="index === pedidos.length - 1 || pedido.numero_pedido !== pedidos[index + 1].numero_pedido">
