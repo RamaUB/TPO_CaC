@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Pizza C&C</title>
+
+   <!-- Cdn Font Awesome   -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!--  Estilos CSS propios   -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+   
+<!-- Sección encabezado  -->
+
+<header class="header">
+
+   <section class="flex">
+
+      <a href="index.html" class="logo"> <img src="images/logo.png" alt="Logo Pizza C&C."></a>
+
+      <nav class="navbar">
+         <a href="index.html">Inicio</a>
+         <a href="nosotros.html">Nosotros</a>
+         <!-- <a href="index.html#testimonios">Testimonios</a> -->
+         <a href="menu.html">Menú</a>
+         <a href="contacto.html">Contacto</a>
+         <!-- <a href="index.html#faq">FAQ</a> -->
+         <a href="pedidos.html">Mis Pedidos</a>
+
+      </nav>
+
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="order-btn" class="fas fa-box"></div>
+         <div id="cart-btn" class="fas fa-shopping-cart"><span>(4)</span></div>
+      </div>
+
+   </section>
+
+</header>
+
+<!-- Fin sección encabezado -->
+    <!-- Seccion About  -->
+
+<section class="about" id="about">
+
+    <h1 class="heading anim-titulo">Sobre Nosotros</h1>
+ 
+
+    <div class="box-flex">
+      <h3>BIENVENIDOS A NUESTRA PIZERÍA ESTILO NAPOLITANO</h3>
+      <p>Donde la tradición italiana se encuentra con el sabor auténtico de la pizza. Nuestras recetas son heredadas de nuestro nono italiano, lo que significa que nuestras pizzas están hechas con los ingredientes más frescos y auténticos.
+      <p>En nuestro horno a leña, cocinamos nuestras pizzas a la perfección, logrando una corteza crujiente y delgada, y un centro suave y jugoso. Además de nuestras pizzas tradicionales, también ofrecemos una variedad de opciones vegetarianas y sin gluten.
+      <p>Ven y disfruta de una auténtica experiencia napolitana en nuestro acogedor restaurante, donde el ambiente cálido y acogedor te transportará a Italia. Nuestro equipo de expertos en pizza está listo para recibirte y brindarte una experiencia gastronómica inolvidable. ¡Te esperamos!</p>
+   </div>
+
+    <div class="box-container">
+
+       <div class="box">
+          <img src="images/about-1.svg" alt="">
+          <h3>Amasadas con amor</h3>
+          <p>Contamos con el mejor equipo de profesionales en gastronomía, especializados en pizzería de todo tipo y sabor. Amasadas con amor y afecto!</p>
+          <a href="menu.html" class="btn">Nuestro Menú</a>
+       </div>
+ 
+       <div class="box">
+          <img src="images/about-2.svg" alt="">
+          <h3>Delivery veloz</h3>
+          <p>Trabajamos con PedidosYa! y Agencia Delivery para ofrecer envíos en tiempo y forma de nuestras pizzas a todos los clientes!</p>
+          <a href="menu.html" class="btn">Nuestro Menú</a>
+       </div>
+ 
+       <div class="box">
+          <img src="images/about-3.svg" alt="">
+          <h3>Compartir con amigos</h3>
+          <p>No dudes en compartir las mejores pizzas con las mejores personas. Puedes hasta realizar reservas de al menos 4 hs antes para disfrutar en nuestro restaurante!</p>
+          <a href="menu.html" class="btn">Nuestro Menú</a>
+       </div>
+ 
+    </div>
+ 
+ </section>
+ 
+ <!-- Fin About -->
+<!-- Carrito -->
+ <div class="shopping-cart">
+
+   <section>
+
+      <div id="close-cart"><span>Cerrar</span></div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-1.jpg" alt="">
+         <div class="content">
+            <p>pizza-1 <span>( $1.200/- x 2 )</span></p>
+            <form>
+               <input type="number" class="cant" name="qty" min="1" value="2" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-3.jpg" alt="">
+         <div class="content">
+            <p>pizza-3 <span>( $1.200/- x 1 )</span></p>
+            <form>
+               <input type="number" class="cant" name="qty" min="1" value="1" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-6.jpg" alt="">
+         <div class="content">
+            <p>pizza-6 <span>( $1.200/- x 2 )</span></p>
+            <form>
+               <input type="number" class="cant" name="qty" min="1" value="2" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="box">
+         <a href="#" class="fas fa-times"></a>
+         <img src="images/pizza-7.jpg" alt="">
+         <div class="content">
+            <p>pizza-7 <span>( $1.200/- x 1 )</span></p>
+            <form>
+               <input type="number" class="cant" name="qty" min="1" value="1" max="100">
+               <button type="submit" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <a href="#order" class="btn">Pedir ahora</a>
+
+   </section>
+
+</div>
+<!-- Fin Carrito -->
+
+
+<!-- Inicio footer  -->
+
+<section class="footer">
+
+   <div class="box-container">
+
+      <div class="box">
+         <i class="fas fa-phone"></i>
+         <h3>Teléfonos</h3>
+         <p>+123-456-7890</p>
+         <p>+111-222-3333</p>
+      </div>
+
+      <div class="box">
+         <i class="fas fa-map-marker-alt"></i>
+         <h3>Dirección</h3>
+         <p>Calle Falsa 123</p>
+         <p>Argentina</p>
+      </div>
+
+      <div class="box">
+         <i class="fas fa-clock"></i>
+         <h3>Horarios</h3>
+         <p>Lunes a Domingo</p>
+         <p>07:00am a 00:10pm</p>
+      </div>
+
+      <div class="box">
+         <i class="fas fa-envelope"></i>
+         <h3>Correo Electrónico</h3>
+         <p>pedidos@pizzascyc.com</p>
+         <p>reclamos@pizzascyc.com</p>
+      </div>
+      
+      <div class="box">
+         <div id="clima"></div>
+      </div>
+   </div>
+
+   <div class="credit">
+      &copy; copyright @ 2023 por <span>Grupo11 - Comisión 23007</span> | Todos los derechos reservados.
+   </div>
+
+</section>
+ <!-- Fin footer-->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- Links scripts  -->
+ <script src="js/script.js"></script>
+ <script src="js/clima.js"></script>
+ 
+ </body>
+ </html>

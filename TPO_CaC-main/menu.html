@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Pizza C&C</title>
+
+   <!-- Cdn Font Awesome   -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!--  Estilos CSS propios   -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<div id="app"> 
+<!-- Sección encabezado  -->
+
+<header class="header">
+
+   <section class="flex">
+
+      <a href="index.html" class="logo"> <img src="images/logo.png" alt="Logo Pizza C&C."></a>
+
+      <nav class="navbar">
+         <a href="index.html">Inicio</a>
+         <a href="nosotros.html">Nosotros</a>
+         <!-- <a href="index.html#testimonios">Testimonios</a> -->
+         <a href="menu.html">Menú</a>
+         <a href="contacto.html">Contacto</a>
+         <!-- <a href="index.html#faq">FAQ</a> -->
+         <a href="pedidos.html">Mis Pedidos</a>
+
+      </nav>
+
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="order-btn" class="fas fa-box"></div>
+         <div id="cart-btn" class="fas fa-shopping-cart"><span>({{cantidadCarrito()}})</span></div>
+      </div>
+
+   </section>
+
+</header>
+
+<!-- Fin sección encabezado -->
+
+
+<!-- Inicio menú  -->
+
+<section id="menu" class="menu" >
+
+    <h1 class="heading anim-titulo">Nuestro Menú</h1>
+ 
+    <div class="box-container">
+ 
+       <div class="box" v-for="pizza in pizzas" :key="pizza.id">
+         <div class="precio">$<span>{{ pizza.precio }}</span>/-</div>
+         <img :src="'images/' + pizza.imagen" alt="">
+         <div class="nombre">{{ pizza.nombre }}</div>
+         <form>
+            <input type="number" min="1" max="100" v-model="pizza.cantidad" class="cant" name="qty">
+            <button type="button" @click="agregarAlCarrito(pizza)" class="btn">Añadir al carrito</button>
+         </form>
+      </div>
+
+    </div>
+ 
+ </section>
+ 
+ <!-- Fin menú -->
+
+ <!-- Carrito -->
+<div class="shopping-cart">
+
+   <section>
+
+      <div id="close-cart"><span>Cerrar</span></div>
+
+      <div class="box" v-for="carr in carrito" :key="carr.id">
+         <a href="#" class="fas fa-times" @click="eliminarDelCarrito(carr.id)"></a>
+         <img :src="'images/' + carr.imagen" alt="">
+         <div class="content">
+            <p>{{ carr.nombre }}<span>( ${{ carr.precio }} x {{ carr.cantidad }} )</span></p>
+            <form>
+               <input type="number" class="cant" name="qty" min="1" v-model="carr.cantidad" max="100">
+               <button type="button" @click="actualizarCantidad(carr)" class="fas fa-edit" name="update_qty"></button>
+            </form>
+         </div>
+      </div>
+
+      <div class="total-price">
+        <h2>Total a pagar:</h2>
+        <p>${{ calcularPrecioTotal() }}</p>
+        <h3>NOTA: Al delivery se le paga el total  más el envío.</h3>
+     </div>
+
+      <a @click="realizarPedido" class="btn">Pedir ahora</a>
+
+   </section>
+
+</div>
+<!-- Fin Carrito -->
+ 
+<!-- Inicio footer  -->
+
+<section class="footer">
+
+   <div class="box-container">
+
+      <div class="box">
+         <i class="fas fa-phone"></i>
+         <h3>Teléfonos</h3>
+         <p>+123-456-7890</p>
+         <p>+111-222-3333</p>
+      </div>
+
+      <div class="box">
+         <i class="fas fa-map-marker-alt"></i>
+         <h3>Dirección</h3>
+         <p>Calle Falsa 123</p>
+         <p>Argentina</p>
+      </div>
+
+      <div class="box">
+         <i class="fas fa-clock"></i>
+         <h3>Horarios</h3>
+         <p>Lunes a Domingo</p>
+         <p>07:00am a 00:10pm</p>
+      </div>
+
+      <div class="box">
+         <i class="fas fa-envelope"></i>
+         <h3>Correo Electrónico</h3>
+         <p>pedidos@pizzascyc.com</p>
+         <p>reclamos@pizzascyc.com</p>
+      </div>
+      
+      <div class="box">
+         <div id="clima"></div>
+      </div>
+   </div>
+
+   <div class="credit">
+      &copy; copyright @ 2023 por <span>Grupo11 - Comisión 23007</span> | Todos los derechos reservados.
+   </div>
+
+</section>
+</div>
+ <!-- Fin footer -->
+  
+ <!-- Links scripts  -->
+ <!--<script src="js/script.js"></script>-->
+ <script src="js/clima.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      URL ='https://ciafa.pythonanywhere.com';
+  
+      new Vue({
+          el: '#app',
+          data: {
+              pizzas: [],
+              carrito: [],
+              nuevaPizza: {
+                  nombre: '',
+                  precio: '',
+                  detalles: '',
+                  imagen: ''
+              },
+              pizzaSeleccionada: null
+          },
+          created() {
+              this.obtenerPizzas();
+              this.obtenerCarrito();
+          },
+          methods: {
+              obtenerPizzas() {
+                  axios.get(URL+'/api/pizzas')
+                      .then(response => {
+                          this.pizzas = response.data;
+                      })
+                      .catch(error => {
+                          console.error(error);
+                      });
+              },
+              obtenerCarrito() {
+                  axios.get(URL+'/api/carrito')
+                      .then(response2 => {
+                          this.carrito = response2.data;
+                          console.log(this.carrito);
+                      })
+                      .catch(error => {
+                          console.error(error);
+                      });
+              },
+              agregarAlCarrito(pizza) {
+                  const { nombre, precio, cantidad, imagen } = pizza;
+  
+                  axios.post(URL+'/api/carrito', {
+                      nombre: nombre,
+                      precio: precio,
+                      cantidad: cantidad,
+                      imagen: imagen
+                  })
+                  .then(response => {
+                      this.obtenerCarrito(); // Actualizar el carrito después de agregar un elemento
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+              },
+              actualizarCantidad(pizza) {
+                  const { id, nombre, precio, cantidad, imagen } = pizza;
+  
+                  axios.put(`${URL}/api/carrito/${id}`, {
+                      nombre: nombre,
+                      precio: precio,
+                      cantidad: cantidad,
+                      imagen: imagen
+                  })
+                  .then(response => {
+                      this.obtenerCarrito(); // Actualizar el carrito después de actualizar la cantidad
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+              },
+              eliminarDelCarrito(id) {
+                axios.delete(`${URL}/api/carrito/${id}`)
+                    .then(response => {
+                        this.obtenerCarrito(); // Actualizar el carrito después de eliminar un elemento
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+            cantidadCarrito() {
+                let cantidad = 0;
+                if (this.carrito.length) {
+                    cantidad = this.carrito.length;
+                }
+                return cantidad;
+            },
+            calcularPrecioTotal() {
+                let total = 0;
+                for (let i = 0; i < this.carrito.length; i++) {
+                    const item = this.carrito[i];
+                    total += item.precio * item.cantidad;
+                }
+                return total;
+            },
+            realizarPedido() {
+                const pedido =  this.carrito;
+
+                axios.post(`${URL}/api/pedidos`, pedido)
+                    .then(response => {
+                        // Manejar la respuesta de la API después de realizar el pedido
+                        console.log(response.data);
+                        // Restablecer el carrito después de realizar el pedido
+                        this.carrito = [];
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }, 
+            // Manipulación del navbar en tamaño mobile
+            manipularNavbarMobile() {
+                    const navbar = document.querySelector('.header .flex .navbar');
+
+                    document.querySelector('#menu-btn').onclick = () => {
+                        navbar.classList.toggle('active');
+                    };
+                },
+
+                // Activar/abrir-desactivar/cerrar shopping cart
+                manipularShoppingCart() {
+                    const cart = document.querySelector('.shopping-cart');
+
+                    document.querySelector('#cart-btn').onclick = () => {
+                        cart.classList.add('active');
+                    };
+
+                    document.querySelector('#close-cart').onclick = () => {
+                        cart.classList.remove('active');
+                    };
+
+                    // Desactivar/cerrar cart al hacer scroll
+                    window.onscroll = () => {
+                        navbar.classList.remove('active');
+                        // myOrders.classList.remove('active');
+                        cart.classList.remove('active');
+                    };
+                },
+
+                // Selectores de pizzas de la pantalla principal del index
+                manipularPizzasIndex() {
+                    const slides = document.querySelectorAll('.home-bg .home .slide-container .slide');
+                    let index = 0;
+
+                    function next() {
+                        slides[index].classList.remove('active');
+                        index = (index + 1) % slides.length;
+                        slides[index].classList.add('active');
+                    }
+
+                    function prev() {
+                        slides[index].classList.remove('active');
+                        index = (index - 1 + slides.length) % slides.length;
+                        slides[index].classList.add('active');
+                    }
+
+                    // Asignar los eventos a los botones correspondientes
+                    document.querySelector('#next-btn').onclick = next;
+                    document.querySelector('#prev-btn').onclick = prev;
+                },
+
+                // Apertura de las preguntas de la sección faq
+                manipularFaq() {
+                    const accordion = document.querySelectorAll('.faq .accordion-container .accordion');
+
+                    accordion.forEach(acco => {
+                        acco.onclick = () => {
+                            accordion.forEach(remove => remove.classList.remove('active'));
+                            acco.classList.add('active');
+                        };
+                    });
+                },
+            },
+
+            mounted() {
+                this.manipularNavbarMobile();
+                this.manipularShoppingCart();
+                this.manipularPizzasIndex();
+                this.manipularFaq();
+            }
+      });
+      
+  </script>
+ </body>
+ </html>
